@@ -35,7 +35,7 @@ Feature: User Management
   I want to be able to login to my account from the home page
   So that I can view my account information, maintain Branches and Staff information
 
-  Scenario: Searching for a term
+  Scenario: Login to the application as an existing user
     Given the Gurukula application is available
     When  I login as user 'admin' and password 'admin'
     Then  the Gurukula home page is visible
