@@ -1,5 +1,5 @@
 # Demo Project for Test Automation of Sample Application  "Gurukula"
-This is a demo project which is used for Tes Automation of Gurukula Application.
+This is a demo project which is used for Test Automation of Gurukula Application.
  It is done using an open source framework which is Serenity BDD. The complete Technical stack also includes Cucumber, Selenium, Junit. Maven is used for managing the build. 
 
 Serenity BDD is a library that makes it easier to write high quality automated acceptance tests, with powerful reporting and living documentation features. It has strong support for both web testing with Selenium, and API testing using RestAssured. 
@@ -105,7 +105,7 @@ $ mvn clean verify -Ddriver=firefox
 The test results will be recorded in the `target/site/serenity` directory.
 
 ## Simplified WebDriver configuration and other Serenity extras
-The sample projects both use some Serenity features which make configuring the tests easier. In particular, Serenity uses the `serenity.conf` file in the `src/test/resources` directory to configure test execution options.  
+Use `serenity.conf` file in the `src/test/resources` directory to configure test execution options.  
 ### Webdriver configuration
 The WebDriver configuration is managed entirely from this file, as illustrated below:
 ```java
@@ -137,10 +137,9 @@ drivers {
   }
 }
 ```
-This configuration means that development machines and build servers do not need to have a particular version of the WebDriver drivers installed for the tests to run correctly.
 
 ### Environment-specific configurations
-We can also configure environment-specific properties and options, so that the tests can be run in different environments. Here, we configure three environments, __dev__, _staging_ and _prod_, with different starting URLs for each:
+We can also configure environment-specific properties and options, so that the tests can be run in different environments.
 ```json
 environments {
    default {
@@ -160,4 +159,12 @@ environments {
 You use the `environment` system property to determine which environment to run against. For example to run the tests in the staging environment, you could run:
 ```json
 $ mvn clean verify -Denvironment=staging
+```
+
+### Known Issues found in Gurukula until now
+Following issues were found while Automating the scenarios
+```json
+1 Registration Page : 1. User Registration does not work even after providing correct user Information
+                      2. Even on loosing focus on login field ,when we have entered invalid username (example -> "s"), no warning is shown which is inconsistent with other fields
+
 ```
