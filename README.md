@@ -1,5 +1,4 @@
 # Getting started with Serenity and Cucumber 2.4
-[![CircleCI](https://circleci.com/gh/serenity-bdd/serenity-cucumber-starter.svg?style=svg)](https://circleci.com/gh/serenity-bdd/serenity-cucumber-starter)
 
 Serenity BDD is a library that makes it easier to write high quality automated acceptance tests, with powerful reporting and living documentation features. It has strong support for both web testing with Selenium, and API testing using RestAssured. 
 
@@ -19,8 +18,9 @@ src
     + java                        Test runners and supporting code
     + resources
       + features                  Feature files
-          + search                  Feature file subdirectories 
-             search_by_keyword.feature 
+          + User Management        Feature file subdirectories 
+             login.feature 
+             register_user.feature
        + webdriver                 Bundled webdriver binaries
          + linux
          + mac
@@ -30,15 +30,18 @@ src
 ```
 
 ## The sample scenario
-Both variations of the sample project uses the sample Cucumber scenario. In this scenario, Sergey (who likes to search for stuff) is performing a search on the DuckDuckGo search engine:
+In this Demo project we have defined scenarios in Cucumber feature files as below. This is done for a sample Gurukula Application. In this scenario, User with a valid username and password is trying to login into the Gurukula Application:
 
 ```Gherkin
-Feature: Search by keyword
+Feature: User Management
+  As a user
+  I want to be able to login to my account from the home page
+  So that I can view my account information, maintain Branches and Staff information
 
   Scenario: Searching for a term
-    Given Sergey is on the DuckDuckGo home page
-    When he searches for "cucumber"
-    Then all the result titles should contain the word "cucumber"
+    Given the Gurukula application is available
+    When  I login as user 'admin' and password 'admin'
+    Then  the Gurukula home page is visible
 ```
 
 
@@ -144,79 +147,6 @@ class SearchResultList {
 
 The main advantage of the approach used in this example is not in the lines of code written, although Serenity does reduce a lot of the boilerplate code that you would normally need to write in a web test. The real advantage is in the use of many small, stable classes, each of which focuses on a single job. This application of the _Single Responsibility Principle_ goes a long way to making the test code more stable, easier to understand, and easier to maintain.
 
-## The Screenplay starter project
-If you prefer to use the Screenplay pattern, or want to try it out, check out the _screenplay_ branch instead of the _master_ branch. In this version of the starter project, the same scenario is implemented using the Screenplay pattern. 
-
-The Screenplay pattern describes tests in terms of actors and the tasks they perform. Tasks are represented as objects performed by an actor, rather than methods. This makes them more flexible and composable, at the cost of being a bit more wordy. Here is an example:
-```java
-    @Before
-    public void setTheStage() {
-        OnStage.setTheStage(new OnlineCast());
-    }
-
-    @Given("^(.*) is on the DuckDuckGo home page")
-    public void on_the_DuckDuckGo_home_page(String actor) {
-        theActorCalled(actor).attemptsTo(         NavigateTo.theDuckDuckGoHomePage()     );
-    }
-
-    @When("she/he searches for {string}")
-    public void search_for(String term) {
-        theActorInTheSpotlight().attemptsTo(
-             SearchFor.term(term)      );
-    }
-
-    @Then("all the result titles should contain the word {string}")
-    public void all_the_result_titles_should_contain_the_word(String term) {
-        theActorInTheSpotlight().should(
-                seeThat("search result titles",
-                        SearchResult.titles(),                     hasSize(greaterThan(0))),
-                seeThat("search result titles",
-                        SearchResult.titles(),                     everyItem(containsIgnoringCase(term)))
-        );
-    }
-```
-
-In both approaches, the Page Objects very close or identical. The differences are mainly in the action classes. Screenplay classes emphasise reusable components and a very readable declarative style, whereas Lean Page Objects and Action Classes opt for a more imperative style.
-
-The `NavigateTo` class performs the same role as it’s equivalent in the Lean Page Object/Action Class version, and looks quite similar:
-```java
-public class NavigateTo  {
-
-    public static Performable theDuckDuckGoHomePage() {
-        return Task.where("{0} opens the DuckDuckGo home page",
-                Open.browserOn().the(DuckDuckGoHomePage.class)
-        );
-    }
-} 
-```
-
-The `SearchFor` class is also similar: it is shown below:
-```java
-public class SearchFor {
-
-    public static Performable term(String term) {
-        return Task.where("{0} attempts to search for #term",
-                Clear.field(SearchForm.SEARCH_FIELD),             Enter.theValue(term).into(SearchForm.SEARCH_FIELD),
-                Click.on(SearchForm.SEARCH_BUTTON)
-        ).with("term").of(term);
-    }
-}
-```
-
-In Screenplay, there is a clear distinction between actions (which change the system state) and questions (which read the system state). In Screenplay, we fetch the search results using a Question class, like this:
-```java
-public class SearchResult {
-    public static Question<List<String>> titles() {
-        return actor ->  
-                 TextContent.of(SearchResultList.RESULT_TITLES)
-                            .viewedBy(actor)
-                            .asList();
-    }
-}
-```
-
-The Screenplay DSL is rich and flexible, and well suited to teams working on large test automation projects with many team members, and who are reasonably comfortable with Java and design patterns. The Lean Page Objects/Action Classes approach proposes a gentler learning curve, but still provides significant advantages in terms of maintainability and reusability.
-
 ## Executing the tests
 To run the sample project, you can either just run the `CucumberTestSuite` test runner class, or run either `mvn verify` or `gradle test` from the command line.
 
@@ -289,11 +219,3 @@ You use the `environment` system property to determine which environment to run 
 ```json
 $ mvn clean verify -Denvironment=staging
 ```
-
-See [**this article**](https://johnfergusonsmart.com/environment-specific-configuration-in-serenity-bdd/) for more details about this feature.
-
-## Want to learn more?
-For more information about Serenity BDD, you can read the [**Serenity BDD Book**](https://serenity-bdd.github.io/theserenitybook/latest/index.html), the official online Serenity documentation source. Other sources include:
-* **[Byte-sized Serenity BDD](https://www.youtube.com/channel/UCav6-dPEUiLbnu-rgpy7_bw/featured)** - tips and tricks about Serenity BDD
-* [**Serenity BDD Blog**](https://johnfergusonsmart.com/category/serenity-bdd/) - regular articles about Serenity BDD
-* [**The Serenity BDD Dojo**](https://serenitydojo.teachable.com) - Online training on Serenity BDD and on test automation and BDD in general. 
