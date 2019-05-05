@@ -164,13 +164,14 @@ $ mvn clean verify -Denvironment=staging
 ### Known Issues found in Gurukula until now
 Following issues were found while Automating the scenarios
 ```json
-1 Registration Page : 1. User Registration does not work even after providing correct user Information
-                      2. Even on loosing focus on login field ,when we have entered invalid username (example -> "s"), no warning is shown which is inconsistent with other fields
-                      3. On Branches Page , we can create duplicate branches (This needs to be confirmed if that behaviour is allowed)
-                      4. May be Pagination is missing on Branch page ( this is inconsitent with Staff page)
-                      5. On Staff Page, we can see Pagination arrow even if there is no Staff entries to be shown
-                      6. Search results on Staff Page does not display branch name
-                      7. Automatic login is not yet supported
+1. User Registration does not work even after providing correct user Information
+2. Even on loosing focus on login field ,when we have entered invalid username (example -> "s"), no warning is shown which is inconsistent with other fields
+3. On Branches Page , we can create duplicate branches (This needs to be confirmed if that behaviour is allowed)
+4. May be Pagination is missing on Branch page ( this is inconsitent with Staff page)
+5. On Staff Page, we can see Pagination arrow even if there is no Staff entries to be shown
+6. Search results on Staff Page does not display branch name
+7. Partial search doesn't work for both staff and branch search page.
+8. Automatic login is not yet supported
                       
 
 ```
