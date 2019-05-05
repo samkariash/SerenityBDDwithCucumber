@@ -170,6 +170,7 @@ Following issues were found while Automating the scenarios
                       4. May be Pagination is missing on Branch page ( this is inconsitent with Staff page)
                       5. On Staff Page, we can see Pagination arrow even if there is no Staff entries to be shown
                       6. Search results on Staff Page does not display branch name
+                      7. Automatic login is not yet supported
                       
 
 ```
