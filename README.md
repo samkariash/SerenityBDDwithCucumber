@@ -168,6 +168,8 @@ Following issues were found while Automating the scenarios
                       2. Even on loosing focus on login field ,when we have entered invalid username (example -> "s"), no warning is shown which is inconsistent with other fields
                       3. On Branches Page , we can create duplicate branches (This needs to be confirmed if that behaviour is allowed)
                       4. May be Pagination is missing on Branch page ( this is inconsitent with Staff page)
-                      4. On Staff Page, we can see Pagination arrow even if there is no Staff entries to be shown
+                      5. On Staff Page, we can see Pagination arrow even if there is no Staff entries to be shown
+                      6. Search results on Staff Page does not display branch name
+                      
 
 ```
